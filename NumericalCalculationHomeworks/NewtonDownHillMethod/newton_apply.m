@@ -1,0 +1,1 @@
+[x,it,convg] = newton_plus(30,'f','g')
