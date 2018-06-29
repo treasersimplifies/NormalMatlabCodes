@@ -485,6 +485,7 @@ step(Tr)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mechatronic Control -6 %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%pre
 %{
 A = [0 1 0 0;
      0 0 0 0;
@@ -508,6 +509,7 @@ T = ss(A,B,C,D);
 step(T)
 %}
 %Pole place via ackerman
+%{
 A = [0 1 0 0;
      0 0 0 0;
      0 0 0 1;
@@ -515,12 +517,41 @@ A = [0 1 0 0;
 B = [0; 1; 0; 3];
 P = [-1.3+2.25i -1.3-2.25i -8 -8];
 K = acker(A,B,P)
-
+%}
+%Ex
+%{
+subplot(2,1,1)
+plot(p12_1d3_p34_15.time-10,p12_1d3_p34_15.signals(1).values)
+hold on
+plot(p12_1d3_p34_8.time-10,p12_1d3_p34_8.signals(1).values)
+hold on
+plot(p12_2_p34_10.time-20,p12_2_p34_10.signals(1).values)
+hold on
+plot(p12_2_p34_15.time-10,p12_2_p34_15.signals(1).values)
+hold on
+legend('p1,2=-1.3 p3,4=-15','p1,2=-1.3 p3,4=-8','p1,2=-2 p3,4=-10','p1,2=-2 p3,4=-15');
+title('Position-Time') % p1,2=-2  p3,4=-15: 
+xlabel('Time/s')
+ylabel('Position/m')
+subplot(2,1,2)
+plot(p12_1d3_p34_15.time-10,abs(p12_1d3_p34_15.signals(2).values))
+hold on
+plot(p12_1d3_p34_8.time-10,abs(p12_1d3_p34_8.signals(2).values))
+hold on
+plot(p12_2_p34_10.time-20,abs(p12_2_p34_10.signals(2).values))
+hold on
+plot(p12_2_p34_15.time-10,abs(p12_2_p34_15.signals(2).values))
+hold on
+legend('p1,2=-1.3 p3,4=-15','p1,2=-1.3 p3,4=-8','p1,2=-2 p3,4=-10','p1,2=-2 p3,4=-15');
+title('Angle-Time') % p1,2=-2  p3,4=-15: 
+xlabel('Time/s')
+ylabel('Angle/degree')
+%}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mechatronic Control -7 %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%1
+%pre 1
 %{
 num_p = 2.67;
 den_p = [1 0 -26.15];
@@ -530,7 +561,7 @@ T = tf(num,den)
 bode(T)
 grid
 %}
-%2
+%pre 2
 %{
 num = 10*conv([0.062 1],[0.165 1]);
 den = conv(conv([0.00445 1],[0.1906 1]),[1 0 -26.15])
